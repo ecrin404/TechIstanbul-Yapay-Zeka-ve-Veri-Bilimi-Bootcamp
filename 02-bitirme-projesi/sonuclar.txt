@@ -1,0 +1,74 @@
+=============================================
+Regresyon Analizi
+---------------------------------------------
+Veri seti: proje_ev_fiyatlari.csv
+
+Doğrusal Regresyon           43795.59     0.911
+Ridge                        43846.33     0.911
+PCR (3 bileşen)             138874.36     0.719
+PLS (3 bileşen)              50872.84     0.897
+Yapay Sinir Ağı              20805.87     0.958
+
+Yorum:
+En düşük MSE'ye sahip model: Yapay Sinir Ağı (MSE = 20805.87, R2 = 0.958).
+
+Doğrusal modeller (Doğrusal, Ridge, PLS) genelde birbirine yakın ve iyi sonuç verir.
+PCR, az sayıda bileşenle bilgi kaybettiği için genelde daha düşük başarı gösterir;
+PLS ise bileşenleri hedef değişkeni de dikkate alarak oluşturduğu için PCR'den daha iyi sonuç verir.
+Veride doğrusal olmayan etkiler varsa yapay sinir ağı diğer modellerden daha düşük hata elde edebilir.
+
+=============================================
+Kümeleme Analizi
+---------------------------------------------
+Veri seti: proje_musteri_segmentasyonu.csv
+Seçilen K: 5
+Silhouette skoru: 0.715
+
+Yorum:
+Dirsek yöntemi ile K = 5 uygun küme sayısı olarak belirlendi;
+bu K için silhouette skoru 0.72 civarındadır (kümelerin iyi ayrışmıştır).
+
+Gelir ve harcama puanı çok farklı ölçeklerde olduğundan standardizasyon yapılmadan
+kümeleme yapılırsa gelir değişkeni uzaklık hesabına baskın gelir ve sonuçlar bozulur;
+bu yüzden standardizasyon önemlidir.
+
+Bulunan kümeler genellikle şu segmentlere karşılık gelir:
+- Düşük gelir - Düşük harcama
+- Düşük gelir - Yüksek harcama
+- Orta gelir - Orta harcama
+- Yüksek gelir - Düşük harcama
+- Yüksek gelir - Yüksek harcama
+
+=============================================
+Metin Duygu Analizi
+---------------------------------------------
+Veri seti: IMDB Dataset of 50K Movie Reviews
+Model: Embedding(10000, 32) -> SimpleRNN(32) -> Dense(sigmoid)
+Eğitim örneği sayısı: 40000, Test örneği sayısı: 10000
+Test doğruluğu: 0.571
+Test kaybı: 0.778
+
+Yorum:
+Model, IMDB film yorumları üzerinde eğitildi ve test doğruluğu 0.571 olarak ölçüldü.
+
+SimpleRNN, uzun metinlerde önceki bilgiyi tam koruyamadığından (kaybolan gradyan sorunu)
+LSTM/GRU gibi yapılara göre genelde daha düşük başarı gösterir;
+yine de temel bir duygu analizi modeli için makul bir sonuçtur.
+
+=============================================
+Görüntü Sınıflandırma
+---------------------------------------------
+Veri seti: Fashion-MNIST (Keras)
+Model: Conv2D(32) -> MaxPool -> Conv2D(64) -> MaxPool -> Flatten -> Dense(64) -> Dense(10, softmax)
+Test doğruluğu: 0.894
+Test kaybı: 0.293
+
+Yorum: CNN modeli, Fashion-MNIST veri setinde 0.894 test doğruluğuna ulaştı.
+
+Conv2D katmanları görüntüdeki kenar ve doku gibi yerel örüntüleri öğrenirken,
+MaxPooling katmanları boyutu azaltıp modeli hesaplama açısından daha verimli
+ve küçük kaymalara karşı daha dayanıklı hale getirir.
+
+Birbirine görsel olarak benzeyen sınıflar (örn. gömlek ve tişört)
+modelin en çok karıştırdığı sınıflar olma eğilimindedir.
+
